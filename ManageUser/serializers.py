@@ -31,9 +31,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     password=validated_data['password']
 )
     return user 
+
 # Login Serializer
-
-
 class LoginSerializer(serializers.Serializer):
           
   email = serializers.CharField()
