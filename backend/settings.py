@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'ManageUser',
     'ManageUser.apps.ManageuserConfig',
+    'blog.apps.BlogConfig',
     'knox'
 ]
 
