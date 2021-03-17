@@ -6,7 +6,6 @@ from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, Te
 from rest_framework.response import Response
 from rest_framework import status
 
-
 # Register api
 class Test(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
@@ -37,7 +36,7 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        return Response({"token": AuthToken.objects.create(user)[1], "username": self.request.data['username']}, status=status.HTTP_200_OK)
+        return Response({"token": AuthToken.objects.create(user)[1], "email": self.request.data['email']}, status=status.HTTP_200_OK)
 
 # Get User API
 class UserAPI(generics.RetrieveAPIView):

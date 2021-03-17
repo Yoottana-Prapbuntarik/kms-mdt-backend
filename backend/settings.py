@@ -43,12 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'ManageUser',
+    # 'ManageUser',
+    'ManageUser.apps.ManageuserConfig',
     'knox'
 ]
 
 
-# AUTH_USER_MODEL = 'ManageUser.User'
+AUTH_USER_MODEL = 'ManageUser.User'
 
 
 MIDDLEWARE = [
