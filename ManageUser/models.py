@@ -43,5 +43,6 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
     class Meta:
+        verbose_name_plural = "จัดการผู้ใช้งาน"
         db_table = 'auth_user'
         unique_together = ('email',)
