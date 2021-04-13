@@ -161,6 +161,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 FILEBROWSER_DIRECTORY = '../media/upload/'
-STATICFILES_DIRS = ('static', 'media')
+# STATICFILES_DIRS = ('static', 'media')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
