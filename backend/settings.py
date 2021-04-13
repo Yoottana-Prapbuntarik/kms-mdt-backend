@@ -150,5 +150,10 @@ STATIC_URL = '/static/'
 FILEBROWSER_DIRECTORY = '../media/upload/'
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
