@@ -156,7 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-FILEBROWSER_DIRECTORY = '../media/upload/'
+FILEBROWSER_DIRECTORY = (BASE_DIR / '../media/upload/')
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
