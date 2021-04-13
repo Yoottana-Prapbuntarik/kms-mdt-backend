@@ -9,7 +9,10 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+
+import dj_database_url
 from environs import Env
+from os import environ
 from pathlib import Path
 env = Env()
 env.read_env()  # read .env file, if it exists
@@ -21,16 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xy0n^r(72phgpfc76ms1d7yxf$s)$x1!#@#)!euvh=%=fo&c1f'
+SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
 from django.contrib.admin.sites import AdminSite
 
-AdminSite.site_header =  env.str('app_name')
+AdminSite.site_header =  environ.get('app_name')
 
 
 # Application definition
@@ -52,7 +55,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'kms-services.herokuapp.com']
 
 AUTH_USER_MODEL = 'ManageUser.User'
 
@@ -60,6 +63,7 @@ AUTH_USER_MODEL = 'ManageUser.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -67,8 +71,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
-
-
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -95,10 +97,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
@@ -144,3 +147,4 @@ FILEBROWSER_DIRECTORY = '../media/upload/'
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
