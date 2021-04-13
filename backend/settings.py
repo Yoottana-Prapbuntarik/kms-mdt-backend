@@ -167,5 +167,5 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
-FILEBROWSER_DIRECTORY = '../media/upload/'
+FILEBROWSER_DIRECTORY = '/media/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
