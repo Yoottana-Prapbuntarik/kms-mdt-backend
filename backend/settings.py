@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['kms-services.herokuapp.com']
+ALLOWED_HOSTS = ['kms-media.herokuapp.com', 'kms-servies-backend.herokuapp.com']
 
 AUTH_USER_MODEL = 'ManageUser.User'
 
@@ -95,6 +95,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+import dj_database_url 
+prod_db  =  dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(prod_db)
 
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
