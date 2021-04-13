@@ -19,7 +19,6 @@ env.read_env()  # read .env file, if it exists
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -29,12 +28,9 @@ SECRET_KEY = environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-
-
 from django.contrib.admin.sites import AdminSite
 
 AdminSite.site_header =  environ.get('app_name')
-
 
 # Application definition
 
