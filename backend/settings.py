@@ -18,8 +18,7 @@ from pathlib import Path
 env = Env()
 env.read_env()  # read .env file, if it exists
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.abspath(os.path.join(__file__, '../../../'))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -156,9 +155,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = (BASE_DIR / 'static')
+STATIC_URL = os.path.join(BASE_DIR, 'static')
+# STATIC_URL = '/static/'
 FILEBROWSER_DIRECTORY = '../media/upload/'
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
