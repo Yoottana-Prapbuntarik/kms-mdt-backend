@@ -26,12 +26,12 @@ SECRET_KEY = 'xy0n^r(72phgpfc76ms1d7yxf$s)$x1!#@#)!euvh=%=fo&c1f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
 
 
 from django.contrib.admin.sites import AdminSite
 
 AdminSite.site_header =  env.str('app_name')
+
 
 # Application definition
 
@@ -48,8 +48,11 @@ INSTALLED_APPS = [
     'servicesUpload',
     'knox',
     'filebrowser',
+    'corsheaders'
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'ManageUser.User'
 
@@ -62,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 

@@ -7,7 +7,7 @@ class BlogAdmin(admin.ModelAdmin):
     model = Blog
     def has_add_permission(self, request, obj=None):
         return False
-    list_display = ['own_user', 'content', 'category']
+    list_display = ['title', 'sub_title', 'cover','own_user', 'category']
     list_filter = ['own_user', 'category']
     ordering = ('id',)
     
