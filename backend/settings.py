@@ -155,8 +155,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-FILEBROWSER_DIRECTORY = (BASE_DIR / '../media/upload/')
+STATIC_URL = (BASE_DIR / 'static')
+FILEBROWSER_DIRECTORY = '../media/upload/'
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
