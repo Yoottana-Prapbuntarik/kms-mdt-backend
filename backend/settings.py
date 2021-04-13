@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import dj_database_url
 from environs import Env
 from os import environ
+import os
 from pathlib import Path
 env = Env()
 env.read_env()  # read .env file, if it exists
