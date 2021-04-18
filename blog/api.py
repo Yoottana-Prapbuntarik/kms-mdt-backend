@@ -2,11 +2,11 @@
 from rest_framework import status
 from rest_framework import generics, permissions
 from knox.models import AuthToken
-from .models import Blog, BlogCategory
+from .models import Blog, BlogCategory, Comment
 from knox.auth import TokenAuthentication
 
 from rest_framework.response import Response
-from .serializer import BlogSerialzer, BlogContentViewSerializer, BlogCategorySerializer 
+from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer, BlogCommentSerializers 
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
     authentication_classes = (TokenAuthentication,)
@@ -27,13 +27,35 @@ class BlogAPI(generics.CreateAPIView):
 
         return Response({'key_message': 'Cannot Create'}, status=status.HTTP_400_BAD_REQUEST)
     
+class GetBlogCommentViewAPI(generics.ListAPIView):
 
+    serializer_class = GetBlogCommentSerializers
+    def get_queryset(self):
+        queryset = Comment.objects.filter(article__id=self.kwargs['pk'])
+        return queryset
+
+
+
+class BlogCommentAPI(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [ permissions.IsAuthenticated,]
+    serializer_class = BlogCommentSerializers
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            article = serializer.validated_data.get('article')
+            user_comment = serializer.validated_data.get('user_comment') 
+            content = serializer.validated_data.get('content')
+            
+            serializer.save(article=article, user_comment=user_comment, content=content)
+            return Response({'key_message': 'Comment blog successfully'})
+        return Response({'key_message': "Can not comment"}, status=status.HTTP_400_BAD_REQUEST)
+        
 class BlogContentViewAPI(generics.ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [permissions.IsAuthenticated,]
-
-    queryset = Blog.objects.all()
     serializer_class = BlogContentViewSerializer
+    queryset = Blog.objects.all()
 
     def get_queryset(self):
         """Return objects fot the current authenticated user only"""

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Blog, BlogCategory
+from .models import Blog, BlogCategory, Comment
 
 
 class BlogSerialzer(serializers.ModelSerializer):
@@ -16,6 +16,7 @@ class getUser(serializers.Field):
             "id": value.own_user.id,
             "first_name": value.own_user.first_name,
             "last_name": value.own_user.last_name,
+            "email": value.own_user.email,
         }
         return ret
 
@@ -38,3 +39,24 @@ class BlogCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogCategory
         fields = ('__all__')
+
+
+
+class getUserComment(serializers.Field):
+    def to_representation(self, value):
+        ret = {
+            "id": value.user_comment.id,
+            "first_name": value.user_comment.first_name,
+            "last_name": value.user_comment.last_name,
+            "email": value.user_comment.email,
+        }
+        return ret
+class GetBlogCommentSerializers(serializers.ModelSerializer):
+    user_comment = getUserComment(source='*')
+    class Meta:
+        model = Comment
+        fields = ('article', 'user_comment', 'content',)
+class BlogCommentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('article', 'user_comment', 'content',)
