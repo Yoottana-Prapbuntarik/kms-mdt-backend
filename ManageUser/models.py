@@ -37,6 +37,7 @@ class User(AbstractUser):
     id = models.AutoField(primary_key=True)
     email = models.EmailField('email', unique=True)
     mobile = models.CharField(max_length=15)
+    image = models.TextField(blank=True, null=True,)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['mobile',]
 
@@ -46,3 +47,5 @@ class User(AbstractUser):
         verbose_name_plural = "จัดการผู้ใช้งาน"
         db_table = 'auth_user'
         unique_together = ('email',)
+
+

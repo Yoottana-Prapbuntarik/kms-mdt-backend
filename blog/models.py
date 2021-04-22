@@ -13,7 +13,7 @@ class BlogCategory(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=255, blank=False, null=False, default="")
-    sub_title = models.CharField(max_length=255, blank=False, null=False, default="")
+    sub_title = models.TextField(blank=False, null=False, default="")
     cover = models.CharField(max_length=255, blank=False, null=False, default="")
     content = models.TextField(null=False, blank=False, default="")
     own_user = models.ForeignKey(

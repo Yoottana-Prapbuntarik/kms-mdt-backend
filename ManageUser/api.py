@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
-
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, Test
+from rest_framework import status, views, viewsets, mixins
+from .models import User
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserProfileSerializer, Test
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -49,3 +50,31 @@ class UserAPI(generics.RetrieveAPIView):
 
   def get_object(self):
     return self.request.user
+
+class GetUserProfileAPI(generics.ListAPIView):
+  permission_classes = [
+      permissions.IsAuthenticated,
+    ]
+
+  authentication_classes = (TokenAuthentication,)
+  serializer_class = UserSerializer
+  def get_queryset(self):
+      queryset = User.objects.filter(first_name=self.kwargs['first_name']).filter(last_name=self.kwargs['last_name']).filter(id=self.kwargs['id'])
+      return queryset
+
+
+class UserProfileAPI(generics.RetrieveUpdateAPIView, mixins.UpdateModelMixin):
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserSerializer
+    def get_queryset(self):
+        queryset = User.objects.filter(email=self.request.user)
+        return queryset
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+        
+    def patch(self, request, *args, **kwargs):
+
+        return self.partial_update(request, *args, **kwargs)
