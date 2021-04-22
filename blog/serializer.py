@@ -49,13 +49,14 @@ class getUserComment(serializers.Field):
             "first_name": value.user_comment.first_name,
             "last_name": value.user_comment.last_name,
             "email": value.user_comment.email,
+            "image": value.user_comment.image
         }
         return ret
 class GetBlogCommentSerializers(serializers.ModelSerializer):
     user_comment = getUserComment(source='*')
     class Meta:
         model = Comment
-        fields = ('article', 'user_comment', 'content',)
+        fields = ('article', 'user_comment', 'content', 'published')
 class BlogCommentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Comment
