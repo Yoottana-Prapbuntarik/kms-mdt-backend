@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0011_blogcategory_slug'),
+        # ('blog', '0011_blogcategory_slug'),
         ('blog', '0011_comment_own_user'),
     ]
 
