@@ -12,11 +12,10 @@ class Test(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ('id','first_name',  'last_name', 'date_joined', 'is_staff')
+    fields = ('id','first_name',  'last_name', 'date_joined', 'mobile', 'is_staff', 'image')
 
 
 # Register
-
 class RegisterSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
@@ -44,3 +43,19 @@ class LoginSerializer(serializers.Serializer):
     if user and user.is_active:
       return user
     raise serializers.ValidationError("Incorrect Credentials")
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = User
+    fields =  ('id', 'mobile', 'first_name', 'last_name', 'image')
+    extra_kwargs = {
+    'email': {'required': False},
+    'mobile': {'required': False},
+    'first_name': {'required': False},
+    'last_name':{'required': False}, 
+    'password':{'required': False}, 
+    }
+
+
+    
