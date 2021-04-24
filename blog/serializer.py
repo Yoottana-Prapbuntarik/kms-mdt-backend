@@ -1,15 +1,6 @@
 from rest_framework import serializers
 from .models import Blog, BlogCategory, Comment
 
-
-class BlogSerialzer(serializers.ModelSerializer):
-    """Serializer for Agreement Template specific fields"""
-
-    class Meta:
-        model = Blog
-        fields = ('content', 'own_user', 'category', 'title', 'sub_title', 'cover')
-
-
 class getUser(serializers.Field):
     def to_representation(self, value):
         ret = {
@@ -17,8 +8,16 @@ class getUser(serializers.Field):
             "first_name": value.own_user.first_name,
             "last_name": value.own_user.last_name,
             "email": value.own_user.email,
+            "image": value.own_user.image
         }
         return ret
+
+class BlogSerialzer(serializers.ModelSerializer):
+    """Serializer for Agreement Template specific fields"""
+
+    class Meta:
+        model = Blog
+        fields = ('content', 'own_user', 'category', 'title',  'sub_title', 'cover')
 
 class getCategory(serializers.Field):
     def to_representation(self, value):
