@@ -4,7 +4,7 @@ from ManageUser.models import User
 # Create your models here.
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False, default="")
-
+    cate_image = models.CharField(max_length=255, null=False, blank=False, default="")
     def __str__(self):
         return self.name
     class Meta:
@@ -24,7 +24,7 @@ class Blog(models.Model):
     pub_date = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(
         BlogCategory,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
         default=1
     )
 

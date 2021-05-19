@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.urls import path, include
 from .models import Blog, BlogCategory, Comment
 
 
@@ -13,11 +13,19 @@ class BlogAdmin(admin.ModelAdmin):
     
 admin.site.register(Blog, BlogAdmin)
 
+
 class BlogCategoryAdmin(admin.ModelAdmin):
     model = BlogCategory
     ordering = ('id',)
     
-admin.site.register(BlogCategory, BlogCategoryAdmin)
+
+
+class TemplateAdmin(admin.ModelAdmin):
+    change_form_template = 'admin/categoryForm.html'
+    list_display = ['name', 'cate_image',]
+
+
+admin.site.register(BlogCategory, TemplateAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):

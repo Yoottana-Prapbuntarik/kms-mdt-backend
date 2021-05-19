@@ -102,3 +102,9 @@ class BlogCategoryAPI(generics.ListAPIView):
         data = {'category': serializer_list.data}
         return Response(data)
 
+
+
+class BlogByCategoryItem(generics.ListAPIView):
+    serializer_class = BlogContentViewSerializer
+    def get_queryset(self):
+        return Blog.objects.filter(category=self.kwargs.get('category_name',None))

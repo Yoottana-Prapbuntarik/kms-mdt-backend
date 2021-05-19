@@ -40,7 +40,6 @@ class BlogCategorySerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-
 class getUserComment(serializers.Field):
     def to_representation(self, value):
         ret = {
