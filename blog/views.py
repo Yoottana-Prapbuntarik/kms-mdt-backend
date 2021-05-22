@@ -1,4 +1,3 @@
-  
 from django.shortcuts import render, redirect
 from .models import BlogCategory
 from django.shortcuts import render
@@ -40,3 +39,14 @@ def categoryForm(request):
         return render(request, 'admin/categoryForm.html')
 
 
+def uploadFileCategory(request):
+    if request.method == 'POST':
+        file = request.FILES['file']
+        file_save = default_storage.save(file.name, file)
+        storage.child("img-category/" + file.name).put("media/" + file.name)
+        delete = default_storage.delete(file.name)
+        img_url = storage.child("img-category/" + file.name).get_url(None)
+        request.session['img_data']= img_url
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        return render(request, 'admin/categoryForm.html')

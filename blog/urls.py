@@ -12,6 +12,6 @@ urlpatterns = [
     path('api/blog/content/category/<int:category_name>', BlogByCategoryItem.as_view()),
 
     # view
-    path('category-form', views.categoryForm, name="category-form"),
+    path('category-form', views.uploadFileCategory, name="category-form"),
 
 ]

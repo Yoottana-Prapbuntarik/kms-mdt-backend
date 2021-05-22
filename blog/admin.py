@@ -20,9 +20,13 @@ class BlogCategoryAdmin(admin.ModelAdmin):
     
 
 
+# class TemplateAdmin(admin.ModelAdmin):
+#     change_form_template = 'admin/categoryForm.html'
+#     list_display = ['name', 'cate_image',]
+
 class TemplateAdmin(admin.ModelAdmin):
-    change_form_template = 'admin/categoryForm.html'
     list_display = ['name', 'cate_image',]
+    change_form_template="admin/blog/upload-category-images.html"
 
 
 admin.site.register(BlogCategory, TemplateAdmin)
