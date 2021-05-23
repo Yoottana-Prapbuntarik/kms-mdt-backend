@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ManageUser.apps.ManageuserConfig',
     'blog.apps.BlogConfig',
+    'document.apps.DocumentConfig',
     'servicesUpload',
     'knox',
     'corsheaders'

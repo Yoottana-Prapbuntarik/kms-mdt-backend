@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from .models import BlogCategory
 from django.shortcuts import render
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -21,13 +20,24 @@ config = {
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
-def uploadFileCategory(request):
+def uploadImageDocument(request):
     if request.method == 'POST':
         file = request.FILES['file']
         file_save = default_storage.save(file.name, file)
-        storage.child("img-category/" + file.name).put("media/" + file.name)
+        storage.child("upload-image-document/" + file.name).put("media/" + file.name)
         delete = default_storage.delete(file.name)
-        img_url = storage.child("img-category/" + file.name).get_url(None)
+        img_url = storage.child("upload-image-document/" + file.name).get_url(None)
+        messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+
+def uploadPdfDocument(request):
+    if request.method == 'POST':
+        file = request.FILES['file']
+        file_save = default_storage.save(file.name, file)
+        storage.child("upload-pdf-document/" + file.name).put("media/" + file.name)
+        delete = default_storage.delete(file.name)
+        img_url = storage.child("upload-pdf-document/" + file.name).get_url(None)
         messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
         return redirect(request.META.get('HTTP_REFERER'))
     

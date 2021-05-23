@@ -33,10 +33,12 @@ class Blog(models.Model):
     )
 
     def __str__(self):
-        return self.content
+        return self.title
     class Meta:
         verbose_name_plural = "บทความ"
-
+    def blog_cover(self):
+        return mark_safe('<img src="%s" width="350px"/>' % self.cover)
+    blog_cover.allow_tags = True
 
 #  user    comment  article
 class Comment(models.Model):

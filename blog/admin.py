@@ -6,8 +6,9 @@ class BlogAdmin(admin.ModelAdmin):
     model = Blog
     def has_add_permission(self, request, obj=None):
         return False
-    list_display = ['title', 'sub_title', 'cover','own_user', 'category']
+    list_display = ['blog_cover', 'title', 'sub_title','own_user', 'category']
     list_filter = ['own_user', 'category']
+    readonly_fields=("blog_cover",)
     ordering = ('id',)
     
 admin.site.register(Blog, BlogAdmin)
