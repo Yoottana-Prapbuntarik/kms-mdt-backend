@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from django.db import models
 from django.conf import settings
 from ManageUser.models import User
@@ -9,6 +10,9 @@ class BlogCategory(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = "ประเภทบทความ"
+    def category_image(self):
+        return mark_safe('<img src="%s" width="350px"/>' % self.cate_image)
+    category_image.allow_tags = True
 
 
 class Blog(models.Model):

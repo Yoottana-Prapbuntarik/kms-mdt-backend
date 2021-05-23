@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import BlogCategory
 from django.shortcuts import render
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.core.files.storage import default_storage
 from django.contrib import messages
 import pyrebase
@@ -46,7 +47,6 @@ def uploadFileCategory(request):
         storage.child("img-category/" + file.name).put("media/" + file.name)
         delete = default_storage.delete(file.name)
         img_url = storage.child("img-category/" + file.name).get_url(None)
-        request.session['img_data']= img_url
+        messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
         return redirect(request.META.get('HTTP_REFERER'))
-    else:
-        return render(request, 'admin/categoryForm.html')
+    

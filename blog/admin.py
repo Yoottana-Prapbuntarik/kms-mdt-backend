@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from .models import Blog, BlogCategory, Comment
 
-
 class BlogAdmin(admin.ModelAdmin):
     model = Blog
     def has_add_permission(self, request, obj=None):
@@ -20,12 +19,9 @@ class BlogCategoryAdmin(admin.ModelAdmin):
     
 
 
-# class TemplateAdmin(admin.ModelAdmin):
-#     change_form_template = 'admin/categoryForm.html'
-#     list_display = ['name', 'cate_image',]
-
 class TemplateAdmin(admin.ModelAdmin):
-    list_display = ['name', 'cate_image',]
+    list_display = ['name', 'cate_image', 'category_image']
+    readonly_fields = ('category_image',)
     change_form_template="admin/blog/upload-category-images.html"
 
 
