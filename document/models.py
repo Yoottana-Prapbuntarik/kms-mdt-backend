@@ -11,7 +11,7 @@ class DocumentType(models.Model):
     def __str__(self):
         return self.document_name
     class Meta:
-        verbose_name_plural = "ประเภทบทความ"
+        verbose_name_plural = "ประเภทเอกสาร"
 
 class DocumentTemplate(models.Model):
     document_type = models.ForeignKey(
@@ -26,7 +26,6 @@ class DocumentTemplate(models.Model):
         verbose_name_plural = "เทมเพลตเอกสาร"
     def document_preview(self):
         return mark_safe('<object width="800" height="600" type="application/pdf" data="%s"> <p>Insert your error message here, if the PDF cannot be displayed.</p> </object>' % self.document_file)
-
 
 class DocumentReview(models.Model):
     STATUS = (

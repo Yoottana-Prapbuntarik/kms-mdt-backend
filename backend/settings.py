@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'ManageUser.apps.ManageuserConfig',
     'blog.apps.BlogConfig',
     'document.apps.DocumentConfig',
+    'news.apps.NewsConfig',
     'servicesUpload',
     'knox',
     'corsheaders'
