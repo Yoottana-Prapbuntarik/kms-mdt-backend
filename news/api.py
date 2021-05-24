@@ -4,12 +4,12 @@ from .models import ArticleNews
 from .serializers import ArticleNewsSerializer
 from rest_framework.response import Response
 
-# class NewsViewAPIById(generics.ListAPIView):
+class NewsViewAPIById(generics.ListAPIView):
 
-#     serializer_class = GetBlogCommentSerializers
-#     def get_queryset(self):
-#         queryset = Comment.objects.filter(article__id=self.kwargs['pk'])
-#         return queryset
+    serializer_class = ArticleNewsSerializer
+    def get_queryset(self):
+        queryset = ArticleNews.objects.filter(id=self.kwargs['pk'])
+        return queryset
 
 
 class NewsViewAllAPI(generics.ListAPIView):
