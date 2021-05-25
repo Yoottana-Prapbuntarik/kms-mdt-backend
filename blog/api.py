@@ -7,6 +7,9 @@ from knox.auth import TokenAuthentication
 
 from rest_framework.response import Response
 from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer, BlogCommentSerializers 
+
+#  API UPLOAD ARTICLE , API LIKE
+
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
     authentication_classes = (TokenAuthentication,)
@@ -33,7 +36,6 @@ class GetBlogCommentViewAPI(generics.ListAPIView):
     def get_queryset(self):
         queryset = Comment.objects.filter(article__id=self.kwargs['pk'])
         return queryset
-
 
 
 class BlogCommentAPI(generics.CreateAPIView):
