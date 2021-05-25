@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'document.apps.DocumentConfig',
     'news.apps.NewsConfig',
+    'questionAnswer.apps.QuestionanswerConfig',
     'servicesUpload',
     'knox',
     'corsheaders'
