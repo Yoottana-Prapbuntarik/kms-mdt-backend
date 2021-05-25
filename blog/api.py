@@ -4,11 +4,8 @@ from rest_framework import generics, permissions
 from knox.models import AuthToken
 from .models import Blog, BlogCategory, Comment
 from knox.auth import TokenAuthentication
-
 from rest_framework.response import Response
 from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer, BlogCommentSerializers 
-
-#  API UPLOAD ARTICLE , API LIKE
 
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
