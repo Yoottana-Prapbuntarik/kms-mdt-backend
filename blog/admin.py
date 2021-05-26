@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .models import Blog, BlogCategory, Comment
+from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
 
 class BlogAdmin(admin.ModelAdmin):
     model = Blog
@@ -38,3 +38,7 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ('id',)
     
 admin.site.register(Comment, CommentAdmin)
+
+
+
+admin.site.register(ArticleLikeAndUnlike)

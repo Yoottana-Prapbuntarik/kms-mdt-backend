@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Blog, BlogCategory, Comment
+from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
 
 class getUser(serializers.Field):
     def to_representation(self, value):
@@ -59,3 +59,10 @@ class BlogCommentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('article', 'user_comment', 'content',)
+
+
+class ArticleLikeAndUnlikeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArticleLikeAndUnlike
+        fields = ('__all__')

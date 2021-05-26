@@ -58,3 +58,15 @@ class Comment(models.Model):
     class Meta:
         verbose_name_plural = "ความเห็นบทความ"
 
+
+class ArticleLikeAndUnlike(models.Model):
+
+    user_like = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    blog_like = models.ForeignKey(
+        Blog,
+        on_delete=models.CASCADE,
+    )

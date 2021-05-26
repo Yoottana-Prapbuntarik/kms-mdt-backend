@@ -1,11 +1,11 @@
 
-from rest_framework import status
-from rest_framework import generics, permissions
+from django.db.models import query
+from rest_framework import status, mixins, generics, permissions
 from knox.models import AuthToken
-from .models import Blog, BlogCategory, Comment
+from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
 from knox.auth import TokenAuthentication
 from rest_framework.response import Response
-from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer, BlogCommentSerializers 
+from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer, BlogCommentSerializers, ArticleLikeAndUnlikeSerializer
 
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
@@ -107,3 +107,85 @@ class BlogByCategoryItem(generics.ListAPIView):
     serializer_class = BlogContentViewSerializer
     def get_queryset(self):
         return Blog.objects.filter(category=self.kwargs.get('category_name',None))
+
+
+
+# Remove and update
+
+class BlogUpdate(generics.RetrieveUpdateAPIView, mixins.UpdateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerialzer
+    def put(self, request, *args, **kwargs):
+        data = self.queryset.filter(own_user=self.request.user).filter(id=self.kwargs['pk'])
+        print(data)
+        if(len(data) == 0):
+            return Response({'key_message': 'Can not updated this is not your own.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:    
+            return self.update(request, *args, **kwargs)
+
+class DeleteBlog(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerialzer
+    def delete(self, request, *args, **kwargs):
+        # find for check is user ? and check id
+        data_for_delete = self.queryset.filter(own_user=self.request.user).filter(blog=self.kwargs['pk'])
+        print(data_for_delete)
+        if(len(data_for_delete) == 0):
+            return Response({'key_message': 'Can not Delete this is not document your own.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:    
+            data_for_delete.delete()
+            return Response({'key_message': 'Deleted  document successully.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class LikeAndUnlikeApi(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = ArticleLikeAndUnlike.objects.all()
+    serializer_class = ArticleLikeAndUnlikeSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user_like = serializer.validated_data.get('user_like')
+            blog_like = serializer.validated_data.get('blog_like')
+            # id blog and id user
+            data_for_like = self.queryset.filter(blog_like=blog_like).filter(user_like=user_like)
+
+            if(len(data_for_like) == 0):
+                user_like = serializer.validated_data.get('user_like')
+                blog_like = serializer.validated_data.get('blog_like')
+                serializer.save(user_like=user_like, blog_like=blog_like)
+
+                return Response({'key_message': 'Like' , 'status': status.HTTP_200_OK})
+            else:
+                data_for_like.delete()
+                return Response({'key_message': 'Unlike' , 'status': status.HTTP_200_OK})
+
+class GetLikeAll(generics.ListAPIView):
+    queryset = ArticleLikeAndUnlike.objects.all()
+    serializer_class = ArticleLikeAndUnlikeSerializer
+    
+    def get_queryset(self):
+        """Return objects fot the current authenticated user only"""
+        
+        data = self.queryset.all()
+        return data
+
+    def list(self, request):
+        queryset_list = self.get_queryset()
+        serializer_list = ArticleLikeAndUnlikeSerializer(queryset_list, many=True)
+        data = {'Like': serializer_list.data}
+        return Response(data)
+
+
+class GetLikeByIdApi(generics.ListAPIView):
+    queryset = ArticleLikeAndUnlike.objects.all()
+    serializer_class = ArticleLikeAndUnlikeSerializer
+
+    def get_queryset(self):
+        queryset = ArticleLikeAndUnlike.objects.filter(blog_like=self.kwargs['pk'])
+        return queryset
