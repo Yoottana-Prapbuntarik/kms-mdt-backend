@@ -111,7 +111,8 @@
                         </label>
                     </div>
                     <form id="file-upload" method="POST" onsubmit="submitForm()" action="{% url 'upload-images-new' %}"
-                        enctype="multipart/form-data">
+                    target="_blank"
+                    enctype="multipart/form-data">
                         {% csrf_token %}
                         <input class="py-5 d-none" type="file" id="file" name="file" required>
                         <br />

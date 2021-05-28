@@ -28,6 +28,8 @@ def uploadFileCategory(request):
         storage.child("img-category/" + file.name).put("media/" + file.name)
         delete = default_storage.delete(file.name)
         img_url = storage.child("img-category/" + file.name).get_url(None)
-        messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
-        return redirect(request.META.get('HTTP_REFERER'))
+        ct = {
+        'content': img_url
+        }
+        return render(request, "check.html", ct)
     

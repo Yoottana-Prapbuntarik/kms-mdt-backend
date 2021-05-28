@@ -22,4 +22,5 @@ urlpatterns = [
 
     # view
     path('category-form', views.uploadFileCategory, name="category-form"),
+
 ]

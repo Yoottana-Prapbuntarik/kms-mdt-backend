@@ -27,9 +27,10 @@ def uploadImageDocument(request):
         storage.child("upload-image-document/" + file.name).put("media/" + file.name)
         delete = default_storage.delete(file.name)
         img_url = storage.child("upload-image-document/" + file.name).get_url(None)
-        messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
-        return redirect(request.META.get('HTTP_REFERER'))
-    
+        ct = {
+        'content': img_url
+        }
+        return render(request, "check.html", ct)    
 
 def uploadPdfDocument(request):
     if request.method == 'POST':
@@ -38,6 +39,7 @@ def uploadPdfDocument(request):
         storage.child("upload-pdf-document/" + file.name).put("media/" + file.name)
         delete = default_storage.delete(file.name)
         img_url = storage.child("upload-pdf-document/" + file.name).get_url(None)
-        messages.success(request, mark_safe("Upload file successfully: "+ "<blockquote>"+ img_url + "</blockquote>"))
-        return redirect(request.META.get('HTTP_REFERER'))
-    
+        ct = {
+        'content': img_url
+        }
+        return render(request, "check.html", ct)    
