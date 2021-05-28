@@ -68,5 +68,6 @@ class ArticleLikeAndUnlike(models.Model):
 
     blog_like = models.ForeignKey(
         Blog,
+        related_name='fk_like_blog',
         on_delete=models.CASCADE,
     )

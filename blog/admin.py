@@ -38,7 +38,3 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ('id',)
     
 admin.site.register(Comment, CommentAdmin)
-
-
-
-admin.site.register(ArticleLikeAndUnlike)

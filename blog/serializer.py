@@ -1,5 +1,10 @@
 from rest_framework import serializers
 from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
+class ArticleLikeAndUnlikeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ArticleLikeAndUnlike
+        fields = ('__all__')
 
 class getUser(serializers.Field):
     def to_representation(self, value):
@@ -13,11 +18,14 @@ class getUser(serializers.Field):
         return ret
 
 class BlogSerialzer(serializers.ModelSerializer):
-    """Serializer for Agreement Template specific fields"""
-
     class Meta:
         model = Blog
         fields = ('content', 'own_user', 'category', 'title',  'sub_title', 'cover')
+
+class BlogDeleteSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = ('id')
 
 class getCategory(serializers.Field):
     def to_representation(self, value):
@@ -28,6 +36,7 @@ class getCategory(serializers.Field):
         return ret
 
 class BlogContentViewSerializer(serializers.ModelSerializer):
+    fk_like_blog = ArticleLikeAndUnlikeSerializer(many=True, read_only=True)
     own_user = getUser(source='*')
     category = getCategory(source='*')
     class Meta:
@@ -59,10 +68,3 @@ class BlogCommentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('article', 'user_comment', 'content',)
-
-
-class ArticleLikeAndUnlikeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ArticleLikeAndUnlike
-        fields = ('__all__')
