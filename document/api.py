@@ -52,6 +52,14 @@ class GetDocumentAPI(generics.ListAPIView):
       queryset = DocumentTemplate.objects.filter(department=self.kwargs['department'])
       return queryset
 
+class GetDocumentAPIById(generics.ListAPIView):
+
+  serializer_class = DocumentTemplateSerializer
+  def get_queryset(self):
+      print(self.kwargs['id'])
+      queryset = DocumentTemplate.objects.filter(id=self.kwargs['id'])
+      return queryset
+
 class GetDocumentReviewAPI(generics.ListAPIView):
 
   serializer_class = CreateDocumentReviewSerializer

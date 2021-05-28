@@ -26,6 +26,7 @@ class DocumentTemplate(models.Model):
     )
     department = models.CharField(blank=False, null=False, max_length=100, choices=DEPARTMENT, default="mdt")
     document_file = models.CharField(max_length=255, null=False, blank=False, default="")
+    description = models.TextField(blank=False, null=False, default="")
     def __str__(self):
         return self.document_file
     class Meta:

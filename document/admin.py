@@ -9,7 +9,7 @@ admin.site.register(DocumentType, DocumentAdmin)
 
 
 class DocumentTemplateAdmin(admin.ModelAdmin):
-    list_display = ['document_type', 'document_file', 'document_preview']
+    list_display = ['document_type', 'document_file', 'document_preview', 'description']
     readonly_fields = ('document_preview', )
     list_filter =['department']
     change_form_template="admin/document/upload-document.html"
