@@ -15,12 +15,6 @@ class CreateDocumentReviewApi(generics.CreateAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-                # document_type = number,
-                # user = number,
-                # student_name = string,
-                # student_code = string,
-                # document_status = approve , reject, waiting
-                # document_file_review = mdt,mda,mmdt
             document_type = serializer.validated_data.get('document_type')
             student_name = serializer.validated_data.get('student_name')
             student_code = serializer.validated_data.get('student_code')
@@ -67,6 +61,23 @@ class GetDocumentReviewAPI(generics.ListAPIView):
       queryset = DocumentReview.objects.all()
       return queryset
 
+# get document user
+class GetDocsAllUser(generics.ListAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [ permissions.IsAuthenticated,]
+    queryset = DocumentReview.objects.all()
+    serializer_class = CreateDocumentReviewSerializer
+    def get_queryset(self):
+        """Return objects fot the current authenticated user only"""
+        
+        data = self.queryset.all()
+        return data
+
+    def list(self, request):
+        queryset_list = self.get_queryset().filter(user=self.request.user)
+        serializer_list = CreateDocumentReviewSerializer(queryset_list, many=True)
+        data = {'document': serializer_list.data}
+        return Response(data)
 
 class DocumentUpdate(generics.RetrieveUpdateAPIView, mixins.UpdateModelMixin):
     authentication_classes = (TokenAuthentication,)

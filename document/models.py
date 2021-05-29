@@ -1,4 +1,5 @@
 from django.db.models.base import Model
+from django.db.models.deletion import CASCADE, RESTRICT
 from django.db.models.enums import Choices
 from django.db.models.expressions import F
 import document
@@ -55,12 +56,15 @@ class DocumentReview(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+    
     student_name = models.CharField(max_length=25, null=False, blank=False, default="")
     student_code = models.CharField(max_length=25, null=False, blank=False, default="")
     document_status = models.CharField(max_length=24, null=False, blank=False, default="waiting", choices=STATUS)
     comment = models.TextField(null=True, blank=True)
     department = models.CharField(blank=False, null=False, max_length=100, choices=DEPARTMENT, default="mdt")
     document_file_review = models.CharField(max_length=255, null=False, blank=False, default="",)
+    pub_date = models.DateField(auto_now=True)
+
     def __str__(self):
         return self.document_file_review
     class Meta:

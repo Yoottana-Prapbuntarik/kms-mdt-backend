@@ -19,7 +19,7 @@ admin.site.register(DocumentTemplate, DocumentTemplateAdmin)
 class DocumentReviewAdmin(admin.ModelAdmin):
     list_display = ['document_type', 'user', 'student_name', 'student_code', 'document_status', 'document_review']
     readonly_fields = ('document_review', )
-    list_filter =['department']
+    list_filter =['department', 'document_status',]
     change_form_template="admin/document/upload-document.html"
 
 admin.site.register(DocumentReview, DocumentReviewAdmin)
