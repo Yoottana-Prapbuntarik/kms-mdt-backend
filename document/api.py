@@ -20,7 +20,8 @@ class CreateDocumentReviewApi(generics.CreateAPIView):
             student_code = serializer.validated_data.get('student_code')
             document_status = serializer.validated_data.get('document_status')
             document_file_review = serializer.validated_data.get('document_file_review')
-            serializer.save(document_type=document_type, user=self.request.user, student_name=student_name, student_code=student_code, document_status=document_status, document_file_review=document_file_review)
+            template = serializer.validated_data.get('template')
+            serializer.save(document_type=document_type, user=self.request.user, student_name=student_name, student_code=student_code, document_status=document_status, document_file_review=document_file_review, template=template)
             return Response({'key_message': 'Created Document successfully' , 'status': status.HTTP_200_OK})
 
         return Response({'key_message': 'Cannot Create'}, status=status.HTTP_400_BAD_REQUEST)

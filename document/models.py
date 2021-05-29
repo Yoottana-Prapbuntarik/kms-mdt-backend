@@ -64,6 +64,11 @@ class DocumentReview(models.Model):
     department = models.CharField(blank=False, null=False, max_length=100, choices=DEPARTMENT, default="mdt")
     document_file_review = models.CharField(max_length=255, null=False, blank=False, default="",)
     pub_date = models.DateField(auto_now=True)
+    template = models.ForeignKey(
+        DocumentTemplate,
+        on_delete=RESTRICT,
+        default=""
+    )
 
     def __str__(self):
         return self.document_file_review
