@@ -63,7 +63,12 @@ class GetBlogCommentSerializers(serializers.ModelSerializer):
     user_comment = getUserComment(source='*')
     class Meta:
         model = Comment
-        fields = ('article', 'user_comment', 'content', 'published')
+        fields = ('id', 'article', 'user_comment', 'content', 'published')
+
+class UpdateBlogCommentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'article', 'user_comment', 'content', 'published')
 class BlogCommentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Comment

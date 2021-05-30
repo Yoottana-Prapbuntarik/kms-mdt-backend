@@ -5,7 +5,7 @@ from knox.models import AuthToken
 from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
 from knox.auth import TokenAuthentication
 from rest_framework.response import Response
-from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer,BlogCommentSerializers, ArticleLikeAndUnlikeSerializer, BlogDeleteSerialzer
+from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer,BlogCommentSerializers, ArticleLikeAndUnlikeSerializer, BlogDeleteSerialzer, UpdateBlogCommentSerializers
 
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
@@ -125,6 +125,7 @@ class BlogUpdate(generics.RetrieveUpdateAPIView, mixins.UpdateModelMixin):
         else:    
             return self.update(request, *args, **kwargs)
 
+
 class DeleteBlog(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
@@ -139,6 +140,46 @@ class DeleteBlog(generics.RetrieveUpdateDestroyAPIView):
         else:    
             data_for_delete.delete()
             return Response({'key_message': 'Deleted  document successully.'}, status=status.HTTP_204_NO_CONTENT)
+
+#  Update comment
+
+class GetBlogCommentViewByIdAPI(generics.ListAPIView):
+
+    serializer_class = GetBlogCommentSerializers
+    def get_queryset(self):
+        queryset = Comment.objects.filter(user_comment__id=self.kwargs['pk'])
+        return queryset
+
+class UpdateComment(generics.RetrieveUpdateAPIView, mixins.UpdateModelMixin):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Comment.objects.all()
+    serializer_class = UpdateBlogCommentSerializers
+    def put(self, request, *args, **kwargs):
+        print(self.kwargs['pk'])
+        data = self.queryset.filter(id=self.kwargs['pk'])
+        data = self.queryset.filter(user_comment=self.request.user).filter(id=self.kwargs['pk'])
+        print(data)
+        if(len(data) == 0):
+            return Response({'key_message': 'Can not updated this is not your own.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:    
+            return self.update(request, *args, **kwargs)
+
+
+class DeleteComment(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = Comment.objects.all()
+    serializer_class = GetBlogCommentSerializers
+    def delete(self, request, *args, **kwargs):
+        # find for check is user ? and check id
+        data_for_delete = self.queryset.filter(user_comment=self.request.user).filter(id=self.kwargs['pk'])
+        print(data_for_delete)
+        if(len(data_for_delete) == 0):
+            return Response({'key_message': 'Can not Delete this is not comment your own.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:    
+            data_for_delete.delete()
+            return Response({'key_message': 'Deleted  comment successully.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class LikeAndUnlikeApi(generics.RetrieveUpdateDestroyAPIView):
