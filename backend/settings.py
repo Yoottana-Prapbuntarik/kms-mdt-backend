@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['kms-media.herokuapp.com', 'kms-servies-backend.herokuapp.com']
+ALLOWED_HOSTS = ['kms-media.herokuapp.com', 'media-kms.herokuapp.com', 'kms-servies.herokuapp.com']
 
 AUTH_USER_MODEL = 'ManageUser.User'
 
