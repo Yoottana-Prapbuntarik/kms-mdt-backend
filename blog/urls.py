@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .api import BlogAPI, BlogContentViewAPI, BlogContentViewAllAPI, BlogCategoryAPI, BlogDetailAPI, GetBlogCommentViewAPI, BlogCommentAPI, BlogByCategoryItem, DeleteBlog, BlogUpdate, LikeAndUnlikeApi, GetLikeAll, GetLikeByIdApi, GetBlogAllUser, UpdateComment, DeleteComment, GetBlogCommentViewByIdAPI
+from .api import BlogAPI, BlogContentViewAPI, BlogContentViewAllAPI, BlogCategoryAPI, BlogDetailAPI, GetBlogCommentViewAPI, BlogCommentAPI, BlogByCategoryItem, DeleteBlog, BlogUpdate, LikeAndUnlikeApi, GetLikeAll, GetLikeByIdApi, GetBlogAllUser, UpdateComment, DeleteComment, GetBlogCommentViewByIdAPI, SearchBlogApi
 urlpatterns = [
     path('api/blog', BlogAPI.as_view()),
     path('api/blog/all', BlogContentViewAllAPI.as_view()),
@@ -14,6 +14,8 @@ urlpatterns = [
     # Delete or update blog
     path('api/blog/update/<int:pk>',BlogUpdate.as_view()),
     path('api/blog/delete/<int:pk>',DeleteBlog.as_view()),
+    path('api/blog/search',SearchBlogApi.as_view()),
+
 
     # Delete or update comment
     path('api/blog/comment/update/<int:pk>',UpdateComment.as_view()),
@@ -28,5 +30,4 @@ urlpatterns = [
 
     # view
     path('category-form', views.uploadFileCategory, name="category-form"),
-
 ]

@@ -9,5 +9,5 @@ urlpatterns = [
     path('api/auth/user', UserAPI.as_view()),
     path('api/auth/profile/<first_name>/<last_name>/<int:id>', GetUserProfileAPI.as_view()),
     path('api/auth/profile/<int:pk>/update', UserProfileAPI.as_view())
-
+    
 ]

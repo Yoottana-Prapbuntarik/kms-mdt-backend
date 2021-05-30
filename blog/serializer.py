@@ -22,6 +22,11 @@ class BlogSerialzer(serializers.ModelSerializer):
         model = Blog
         fields = ('content', 'own_user', 'category', 'title',  'sub_title', 'cover')
 
+class SearchBlogSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = ('__all__')
+
 class BlogDeleteSerialzer(serializers.ModelSerializer):
     class Meta:
         model = Blog

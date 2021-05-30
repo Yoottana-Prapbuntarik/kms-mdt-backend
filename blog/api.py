@@ -5,7 +5,9 @@ from knox.models import AuthToken
 from .models import Blog, BlogCategory, Comment, ArticleLikeAndUnlike
 from knox.auth import TokenAuthentication
 from rest_framework.response import Response
-from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer,BlogCommentSerializers, ArticleLikeAndUnlikeSerializer, BlogDeleteSerialzer, UpdateBlogCommentSerializers
+from .serializer import BlogSerialzer, BlogContentViewSerializer, GetBlogCommentSerializers, BlogCategorySerializer,BlogCommentSerializers, ArticleLikeAndUnlikeSerializer, BlogDeleteSerialzer, UpdateBlogCommentSerializers, SearchBlogSerialzer
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 class BlogAPI(generics.CreateAPIView):
     """Create Agreement Content View """
@@ -33,7 +35,6 @@ class GetBlogCommentViewAPI(generics.ListAPIView):
     def get_queryset(self):
         queryset = Comment.objects.filter(article__id=self.kwargs['pk'])
         return queryset
-
 
 class BlogCommentAPI(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
@@ -107,7 +108,6 @@ class BlogByCategoryItem(generics.ListAPIView):
     serializer_class = BlogContentViewSerializer
     def get_queryset(self):
         return Blog.objects.filter(category=self.kwargs.get('category_name',None))
-
 
 
 # Remove and update
@@ -250,3 +250,10 @@ class GetBlogAllUser(generics.ListAPIView):
         serializer_list = BlogContentViewSerializer(queryset_list, many=True)
         data = {'blog': serializer_list.data}
         return Response(data)
+
+
+class SearchBlogApi(generics.ListAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = SearchBlogSerialzer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'sub_title','content','own_user__first_name', 'own_user__last_name','category__name']

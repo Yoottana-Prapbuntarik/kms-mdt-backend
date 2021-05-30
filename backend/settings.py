@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'questionAnswer.apps.QuestionanswerConfig',
     'servicesUpload',
     'knox',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
