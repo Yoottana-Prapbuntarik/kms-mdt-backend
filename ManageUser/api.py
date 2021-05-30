@@ -7,7 +7,7 @@ from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, Us
 from rest_framework.response import Response
 from rest_framework import status
 
-# Register api
+
 class Test(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         
@@ -17,8 +17,6 @@ class Test(generics.GenericAPIView):
         
         return Response({"post": "post"})
 
-
-
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -27,7 +25,6 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response({"data": "Created User Successful.", "token": AuthToken.objects.create(user)[1]}, status=status.HTTP_201_CREATED)
-
 
 # Login api
 class LoginAPI(generics.GenericAPIView):

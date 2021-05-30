@@ -43,9 +43,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'ManageUser.apps.ManageuserConfig',
     'blog.apps.BlogConfig',
+    'document.apps.DocumentConfig',
+    'news.apps.NewsConfig',
+    'questionAnswer.apps.QuestionanswerConfig',
     'servicesUpload',
     'knox',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -71,7 +75,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
