@@ -10,5 +10,5 @@ class QuestionAdmin(admin.ModelAdmin):
     readonly_fields=("preview_image",)
     ordering = ('id',)
     
-admin.site.register(QuestionTopic, QuestionAdmin)
-admin.site.register(CommentQuestion)
+# admin.site.register(QuestionTopic, QuestionAdmin)
+# admin.site.register(CommentQuestion)
