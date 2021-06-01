@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'servicesUpload',
     'knox',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'django_rest_passwordreset'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -147,3 +148,9 @@ FILEBROWSER_DIRECTORY = '../media/upload/'
 FILEBROWSER_DIRECTORY = ''
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'nap383199@gmail.com'
+EMAIL_HOST_PASSWORD = '48613244a'

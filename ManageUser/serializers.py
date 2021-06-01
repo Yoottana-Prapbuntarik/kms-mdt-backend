@@ -3,6 +3,28 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import User
 
+class CustomTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(
+        style={'input_type': 'password'},
+        label="New Password",
+        write_only=True,
+        min_length=8
+    )
+    new_password = serializers.CharField(
+        required=True,
+        write_only=True,
+        style={'input_type': 'password'},
+        min_length=8
+    )
+
+    
 class Test(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
