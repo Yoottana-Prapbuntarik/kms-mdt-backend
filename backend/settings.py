@@ -150,7 +150,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'nap383199@gmail.com'
-EMAIL_HOST_PASSWORD = '48613244a'
+EMAIL_HOST_USER = 'postmaster@sandbox7821d74f7db048b5ac6e58e19807c25b.mailgun.org'
+EMAIL_HOST_PASSWORD = '1b329f59b010206d4fc03cfcec56e68e-1d8af1f4-6a447317'
